@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { calculateSettlements, type Player, type Settlement } from './utils/settlement'
 
+let nextId = 3
 const globalBase = ref(300)
 const players = ref<Player[]>([
   { id: '1', name: 'Player 1', units: 1, current: 0 },
@@ -16,10 +17,10 @@ const totalCurrent = computed(() => players.value.reduce((sum, p) => sum + p.cur
 const isBalanced = computed(() => Math.abs(totalBase.value - totalCurrent.value) < 0.01)
 
 const addPlayer = () => {
-  const id = (players.value.length + 1).toString()
+  const currentId = nextId++
   players.value.push({
-    id,
-    name: `Player ${id}`,
+    id: currentId.toString(),
+    name: `Player ${currentId}`,
     units: 1,
     current: 0
   })
